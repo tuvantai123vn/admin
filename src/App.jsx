@@ -10,7 +10,7 @@ import NewProduct from "./New/NewProduct";
 import Update from "./update/update";
 import { useEffect, useState } from "react";
 import Login from "./Login/Login";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Cookies from "universal-cookie";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -18,11 +18,11 @@ function App() {
   const cookies = new Cookies();
   const [login, setLogin] = useState(false);
   const token = cookies.get("accessToken");
-  const decodedToken = token ? jwt_decode(token) : {};
+  const decodedToken = token ? jwtDecode(token) : {};
   const { role } = decodedToken;
   useEffect(() => {
     if (token) {
-      console.log('token', token);
+      console.log("token", token);
       setLogin(true);
     }
   }, [token]);
@@ -40,56 +40,82 @@ function App() {
           data-header-position="fixed"
           data-boxed-layout="full"
         >
-          <Header user = {decodedToken}/>
-          <Menu login = {login}/>
+          <Header user={decodedToken} />
+          <Menu login={login} />
           <Routes>
-            <Route path="/login" element={<Login/>} />
-            <Route path="/home" element={<Home/>} />
-            
-            {/* <ProtectedRoute
+            <Route path="/login" element={<Login />} />
+            <Route
               path="/chat"
-              component={Chat}
-              roles={["admin", "customer"]}
-              role={role}
+              element={
+                <ProtectedRoute
+                  roles={["admin", "customer"]}
+                  role={role}
+                  element={<Chat />}
+                />
+              }
             />
-            <ProtectedRoute
+            <Route
               exact
               path="/home"
-              component={Home}
-              roles={["admin"]}
-              role={role}
+              element={
+                <ProtectedRoute
+                  roles={["admin"]}
+                  role={role}
+                  element={<Home />}
+                />
+              }
             />
-            <ProtectedRoute
+            <Route
               path="/users"
-              component={Users}
-              roles={["admin"]}
-              role={role}
+              element={
+                <ProtectedRoute
+                  roles={["admin"]}
+                  role={role}
+                  element={<Users />}
+                />
+              }
             />
-            <ProtectedRoute
+            <Route
               exact
               path="/products"
-              component={Products}
-              roles={["admin"]}
-              role={role}
+              element={
+                <ProtectedRoute
+                  roles={["admin"]}
+                  role={role}
+                  element={<Products />}
+                />
+              }
             />
-            <ProtectedRoute
+            <Route
               path="/history"
-              component={History}
-              roles={["admin"]}
-              role={role}
+              element={
+                <ProtectedRoute
+                  roles={["admin"]}
+                  role={role}
+                  element={<History />}
+                />
+              }
             />
-            <ProtectedRoute
+            <Route
               path="/new"
-              component={NewProduct}
-              roles={["admin"]}
-              role={role}
+              element={
+                <ProtectedRoute
+                  roles={["admin"]}
+                  role={role}
+                  element={<NewProduct />}
+                />
+              }
             />
-            <ProtectedRoute
+            <Route
               path="/products/view-edit/:id"
-              component={Update}
-              roles={["admin"]}
-              role={role}
-            /> */}
+              element={
+                <ProtectedRoute
+                  roles={["admin"]}
+                  role={role}
+                  element={<Update />}
+                />
+              }
+            />
           </Routes>
         </div>
       </BrowserRouter>

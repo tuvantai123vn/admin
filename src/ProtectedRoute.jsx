@@ -1,21 +1,14 @@
 import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+const ProtectedRoute = ({ element, roles, role }) => {
+  const navigate = useNavigate();
 
-// const ProtectedRoute = ({ component: Component, roles, role, ...rest }) => {
-//   return(
-//   <Route
-//     {...rest}
-//     render={(props) =>
-//       roles.includes(role) ? <Component {...props} role={role} />  : Navigate('/login')
-//     }
-//   />
-// )};
-const ProtectedRoute = ({ component: Component, roles, role, ...rest }) => {
-
-  return roles.includes(role) ? children : <Navigate to="/login" />;
-  
+  if (roles.includes(role)) {
+    return element;
+  } else {
+    return navigate('/login');
+  }
 };
-
 
 export default ProtectedRoute;

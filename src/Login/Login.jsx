@@ -24,6 +24,7 @@ function Login() {
         password,
       };
       const responseData = await UserAPI.postSignUpAdmin(user);
+      console.log(responseData);
       if (responseData.statusText === "OK") {
         console.log("responseData", responseData);
         navigate("/home");
