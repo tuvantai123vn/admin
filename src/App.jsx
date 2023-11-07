@@ -44,8 +44,7 @@ function App() {
           <Menu login={login} />
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
-            {/* <Route
+            <Route
               path="/chat"
               element={
                 <ProtectedRoute
@@ -116,7 +115,7 @@ function App() {
                   element={<Update />}
                 />
               }
-            /> */}
+            />
           </Routes>
         </div>
       </BrowserRouter>
