@@ -4,11 +4,10 @@ import Cookies from "universal-cookie";
 
 function LoginLink(props) {
   const cookies = new Cookies();
+  const cookie = cookies.get("accessToken");
 
   const onRedirect = () => {
-    axios.delete("http://localhost:5001/auth/logout", {
-      withCredentials: true,
-    });
+    axios.delete("http://localhost:5001/auth/logout", {cookie});
     cookies.remove("accessToken");
   };
 
